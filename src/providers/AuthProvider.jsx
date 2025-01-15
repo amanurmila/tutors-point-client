@@ -13,7 +13,6 @@ import {
 } from "firebase/auth";
 import { createContext, useEffect, useState } from "react";
 import app from "../firebase/firebase.init";
-import axios from "axios";
 import useAxiosPublic from "../hooks/useAxiosPublic";
 
 export const AuthContext = createContext();

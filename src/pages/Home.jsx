@@ -1,9 +1,15 @@
+import BannerSection from "./Home/BannerSection";
+import StudySessions from "./Home/StudySessions";
+
 const Home = () => {
   return (
     <div>
-      <div>
-        <h1>Home component</h1>
-      </div>
+      <section>
+        <BannerSection />
+      </section>
+      <section>
+        <StudySessions />
+      </section>
     </div>
   );
 };
