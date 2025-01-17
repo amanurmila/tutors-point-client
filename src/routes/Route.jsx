@@ -7,9 +7,13 @@ import Register from "../components/Register";
 import PrivateRoute from "./PrivateRoute";
 import Dashboard from "../private_pages/Dashboard";
 import Admin from "../pages/AdminPage/Admin";
-import Student from "../pages/Studentpage/Student";
-import Tutor from "../pages/TutorPage/Tutor";
-import Student2 from "../pages/Studentpage/Student2";
+import Student from "../pages/StudentPage/Student";
+import Student2 from "../pages/StudentPage/Student2";
+import CreateSession from "../pages/TutorPage/CreateSession";
+import ViewAllSession from "../pages/TutorPage/ViewAllSession";
+import UploadMaterials from "../pages/TutorPage/UploadMaterials";
+import ViewAllMaterials from "../pages/TutorPage/ViewAllMaterials";
+import PrivateTutor from "./PrivateTutor";
 
 const routes = [
   {
@@ -29,10 +33,12 @@ const routes = [
           </PrivateRoute>
         ),
         children: [
+          // Admin routes is here-->
           {
             path: "admin",
             element: <Admin />,
           },
+          // Students routes is here-->
           {
             path: "student",
             element: <Student />,
@@ -41,9 +47,38 @@ const routes = [
             path: "student2",
             element: <Student2 />,
           },
+          // Tutor routes is here-->
           {
-            path: "tutor",
-            element: <Tutor />,
+            path: "createSession",
+            element: (
+              <PrivateTutor>
+                <CreateSession />
+              </PrivateTutor>
+            ),
+          },
+          {
+            path: "viewAllSession",
+            element: (
+              <PrivateTutor>
+                <ViewAllSession />
+              </PrivateTutor>
+            ),
+          },
+          {
+            path: "uploadMaterials",
+            element: (
+              <PrivateTutor>
+                <UploadMaterials />
+              </PrivateTutor>
+            ),
+          },
+          {
+            path: "viewAllMaterials",
+            element: (
+              <PrivateTutor>
+                <ViewAllMaterials />
+              </PrivateTutor>
+            ),
           },
         ],
       },

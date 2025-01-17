@@ -83,15 +83,7 @@ const Register = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        if (data.success) {
-          toast.success("User saved successfully");
-          setShowRoleModal(false); // Close the modal after success
-          setUser(userData);
-          navigate("/");
-        } else {
-          setError("Failed to save user. Please try again.");
-          setShowRoleModal(false); // Close the modal on error
-        }
+        console.log("User Created Successfully!");
       })
       .catch((err) => {
         console.error(err);
