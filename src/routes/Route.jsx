@@ -11,12 +11,13 @@ import Student2 from "../pages/StudentPage/Student2";
 import CreateSession from "../pages/TutorPage/CreateSession";
 import ViewAllSession from "../pages/TutorPage/ViewAllSession";
 import UploadMaterials from "../pages/TutorPage/UploadMaterials";
-import ViewAllMaterials from "../pages/TutorPage/ViewAllMaterials";
+import ViewAllMaterials from "../pages/TutorPage/ViewUserByEmail";
 import PrivateTutor from "./PrivateTutor";
 import AllUsers from "../pages/AdminPage/AllUsers";
 import AllStudySession from "../pages/AdminPage/AllStudySession";
 import AllMaterials from "../pages/AdminPage/AllMaterials";
 import PrivateAdmin from "./PrivateAdmin";
+import ViewUserByEmail from "../pages/TutorPage/ViewUserByEmail";
 
 const routes = [
   {
@@ -99,7 +100,7 @@ const routes = [
             path: "viewAllMaterials",
             element: (
               <PrivateTutor>
-                <ViewAllMaterials />
+                <ViewUserByEmail />
               </PrivateTutor>
             ),
           },
