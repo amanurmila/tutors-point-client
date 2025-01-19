@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import useUsers from "../hooks/useUsers";
 import useAuth from "../hooks/useAuth";
 import { NavLink, Outlet } from "react-router-dom";
-import { FaEye, FaRegEdit, FaRegEye, FaUpload } from "react-icons/fa";
+import { FaEye, FaRegEdit, FaRegEye, FaUpload, FaUsers } from "react-icons/fa";
+import { SiBookstack, SiEducative } from "react-icons/si";
 
 const Dashboard = () => {
   const [users] = useUsers();
@@ -18,8 +19,27 @@ const Dashboard = () => {
     <div className="grid w-11/12 mx-auto grid-cols-12 gap-6">
       <div className="col-span-2 bg-purple-600 h-screen text-white text-center">
         {foundItem?.role === "admin" ? (
-          <section>
-            <NavLink to="/dashboard/admin">Admin</NavLink>
+          <section className="my-5 mx-1 flex flex-col gap-3">
+            <NavLink
+              className="btn btn-sm flex justify-center items-center gap-1"
+              to="/dashboard/allUsers"
+            >
+              <FaUsers /> All Users
+            </NavLink>
+            <NavLink
+              className="btn btn-sm flex justify-center items-center gap-1"
+              to="/dashboard/allStudySessions"
+            >
+              <SiEducative />
+              All Sessions
+            </NavLink>
+            <NavLink
+              className="btn btn-sm flex justify-center items-center gap-1"
+              to="/dashboard/allMaterials"
+            >
+              <SiBookstack />
+              All materials
+            </NavLink>
           </section>
         ) : foundItem?.role === "tutor" ? (
           <section className="my-5 mx-1 flex flex-col gap-3">

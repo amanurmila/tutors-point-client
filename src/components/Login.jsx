@@ -34,7 +34,7 @@ const Login = () => {
           pauseOnHover: true,
         }); // Success toast
 
-        navigate(location?.state ? location.state : "/");
+        navigate("/");
       })
       .catch((error) => {
         setError("Invalid email or password. Please try again."); // Set error message
@@ -58,7 +58,7 @@ const Login = () => {
           autoClose: 1500,
           pauseOnHover: true,
         }); // Success toast
-        navigate(location?.state ? location.state : "/");
+        navigate("/");
       })
       .catch((error) => {
         setError("Failed to sign in with Google. Please try again."); // Set Google error message

@@ -5,20 +5,20 @@ import { AuthContext } from "../providers/AuthProvider";
 import useRole from "../hooks/useRole";
 
 // eslint-disable-next-line react/prop-types
-const PrivateTutor = ({ children }) => {
+const PrivateAdmin = ({ children }) => {
   const { user, loading } = useContext(AuthContext);
   const location = useLocation();
-  const [userData,, isLoading] = useRole();
+  const [userData, , isLoading] = useRole();
 
   const role = userData?.role;
 
   if (isLoading) {
     return <Loading></Loading>;
   }
-  if (role === "tutor") {
+  if (role === "admin") {
     return children;
   }
   return <Navigate state={location.pathname} to={"/login"}></Navigate>;
 };
 
-export default PrivateTutor;
+export default PrivateAdmin;

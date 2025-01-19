@@ -6,7 +6,6 @@ import Login from "../components/Login";
 import Register from "../components/Register";
 import PrivateRoute from "./PrivateRoute";
 import Dashboard from "../private_pages/Dashboard";
-import Admin from "../pages/AdminPage/Admin";
 import Student from "../pages/StudentPage/Student";
 import Student2 from "../pages/StudentPage/Student2";
 import CreateSession from "../pages/TutorPage/CreateSession";
@@ -14,6 +13,10 @@ import ViewAllSession from "../pages/TutorPage/ViewAllSession";
 import UploadMaterials from "../pages/TutorPage/UploadMaterials";
 import ViewAllMaterials from "../pages/TutorPage/ViewAllMaterials";
 import PrivateTutor from "./PrivateTutor";
+import AllUsers from "../pages/AdminPage/AllUsers";
+import AllStudySession from "../pages/AdminPage/AllStudySession";
+import AllMaterials from "../pages/AdminPage/AllMaterials";
+import PrivateAdmin from "./PrivateAdmin";
 
 const routes = [
   {
@@ -35,8 +38,28 @@ const routes = [
         children: [
           // Admin routes is here-->
           {
-            path: "admin",
-            element: <Admin />,
+            path: "allUsers",
+            element: (
+              <PrivateAdmin>
+                <AllUsers />
+              </PrivateAdmin>
+            ),
+          },
+          {
+            path: "allStudySessions",
+            element: (
+              <PrivateAdmin>
+                <AllStudySession />
+              </PrivateAdmin>
+            ),
+          },
+          {
+            path: "allMaterials",
+            element: (
+              <PrivateAdmin>
+                <AllMaterials />
+              </PrivateAdmin>
+            ),
           },
           // Students routes is here-->
           {
