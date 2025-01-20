@@ -1,9 +1,8 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import React, { useEffect, useState } from "react";
-import useAxiosSecure from "../../Hooks/useAxiosSecure";
-import useCarts from "../../Hooks/useCarts";
-import useAuth from "../../Hooks/useAuth";
 import Swal from "sweetalert2";
+import useSecureAxios from "../../hooks/useSecureAxios";
+import useAuth from "../../hooks/useAuth";
 
 const CheckoutForm = () => {
   const [error, setError] = useState("");
@@ -11,10 +10,8 @@ const CheckoutForm = () => {
   const [transactionId, setTransactionId] = useState("");
   const stripe = useStripe();
   const elements = useElements();
-  const axiosSecure = useAxiosSecure();
-  const [cart, refetch] = useCarts();
+  const axiosSecure = useSecureAxios();
   const { user } = useAuth();
-  const totalPrice = cart.reduce((total, item) => total + item.price, 0);
 
   useEffect(() => {
     if (totalPrice > 0) {

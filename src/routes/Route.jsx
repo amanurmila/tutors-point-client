@@ -19,6 +19,7 @@ import AllMaterials from "../pages/AdminPage/AllMaterials";
 import PrivateAdmin from "./PrivateAdmin";
 import ViewUserByEmail from "../pages/TutorPage/ViewUserByEmail";
 import SessionDetails from "../pages/Home/SessionDetails";
+import PaymentPage from "../components/Stripe/PaymentPage";
 
 const routes = [
   {
@@ -34,6 +35,14 @@ const routes = [
         element: (
           <PrivateRoute>
             <SessionDetails />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/payment/:sessionId",
+        element: (
+          <PrivateRoute>
+            <PaymentPage />
           </PrivateRoute>
         ),
       },

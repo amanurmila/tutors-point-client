@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import useSecureAxios from "../../hooks/useSecureAxios";
 import { useQuery } from "@tanstack/react-query";
 import useAuth from "../../hooks/useAuth";
@@ -7,8 +7,10 @@ import { FaStar } from "react-icons/fa";
 
 const SessionDetails = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const secureAxios = useSecureAxios();
   const { user } = useAuth();
+  const [loading, setLoading] = useState(false);
 
   const { data: session = {} } = useQuery({
     queryKey: ["session", id],
@@ -45,6 +47,33 @@ const SessionDetails = () => {
   // Disable the "Book Now" button if registration is closed or user is admin/tutor
   const isBookDisabled =
     isRegistrationClosed || user?.role === "admin" || user?.role === "tutor";
+
+  const handleBooking = async () => {
+    setLoading(true);
+
+    try {
+      const response = await secureAxios.post("/book-session", {
+        sessionId: id,
+        studentEmail: user?.email,
+        registrationFee,
+      });
+
+      const { clientSecret, message } = response.data;
+
+      if (registrationFee === 0) {
+        // Free session booked
+        alert(message || "Session booked successfully!");
+      } else {
+        // Paid session: Redirect to payment page
+        navigate(`/payment/${id}`, { state: { clientSecret, session } });
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Failed to book session. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="card w-full lg:w-96 bg-base-100 shadow-xl mx-auto">
@@ -105,10 +134,17 @@ const SessionDetails = () => {
 
         <div className="mt-6">
           <button
-            className={`btn ${isBookDisabled ? "btn-disabled" : "btn-primary"}`}
-            disabled={isBookDisabled}
+            onClick={handleBooking}
+            className={`btn ${
+              isBookDisabled || loading ? "btn-disabled" : "btn-primary"
+            }`}
+            disabled={isBookDisabled || loading}
           >
-            {isRegistrationClosed ? "Registration Closed" : "Book Now"}
+            {loading
+              ? "Processing..."
+              : isRegistrationClosed
+              ? "Registration Closed"
+              : "Book Now"}
           </button>
         </div>
       </div>
