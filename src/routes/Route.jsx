@@ -18,6 +18,7 @@ import AllStudySession from "../pages/AdminPage/AllStudySession";
 import AllMaterials from "../pages/AdminPage/AllMaterials";
 import PrivateAdmin from "./PrivateAdmin";
 import ViewUserByEmail from "../pages/TutorPage/ViewUserByEmail";
+import SessionDetails from "../pages/Home/SessionDetails";
 
 const routes = [
   {
@@ -27,6 +28,14 @@ const routes = [
       {
         path: "/",
         element: <Home />,
+      },
+      {
+        path: "/session/:id",
+        element: (
+          <PrivateRoute>
+            <SessionDetails />
+          </PrivateRoute>
+        ),
       },
 
       {
