@@ -15,7 +15,7 @@ const PrivateAdmin = ({ children }) => {
   if (isLoading) {
     return <Loading></Loading>;
   }
-  if (role === "tutor") {
+  if (role === "student") {
     return children;
   }
   return <Navigate state={location.pathname} to={"/login"}></Navigate>;

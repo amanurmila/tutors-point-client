@@ -2,7 +2,17 @@ import React, { useEffect, useState } from "react";
 import useUsers from "../hooks/useUsers";
 import useAuth from "../hooks/useAuth";
 import { NavLink, Outlet } from "react-router-dom";
-import { FaEye, FaRegEdit, FaRegEye, FaUpload, FaUsers } from "react-icons/fa";
+import {
+  FaBookDead,
+  FaEye,
+  FaNotesMedical,
+  FaRegEdit,
+  FaRegEye,
+  FaRegSave,
+  FaSave,
+  FaUpload,
+  FaUsers,
+} from "react-icons/fa";
 import { SiBookstack, SiEducative } from "react-icons/si";
 
 const Dashboard = () => {
@@ -22,20 +32,20 @@ const Dashboard = () => {
           <section className="my-5 mx-1 flex flex-col gap-3">
             <NavLink
               className="btn btn-sm flex justify-center items-center gap-1"
-              to="/dashboard/allUsers"
+              to="/dashboard/admin/allUsers"
             >
               <FaUsers /> All Users
             </NavLink>
             <NavLink
               className="btn btn-sm flex justify-center items-center gap-1"
-              to="/dashboard/allStudySessions"
+              to="/dashboard/admin/allStudySessions"
             >
               <SiEducative />
               All Sessions
             </NavLink>
             <NavLink
               className="btn btn-sm flex justify-center items-center gap-1"
-              to="/dashboard/allMaterials"
+              to="/dashboard/admin/allMaterials"
             >
               <SiBookstack />
               All materials
@@ -45,33 +55,55 @@ const Dashboard = () => {
           <section className="my-5 mx-1 flex flex-col gap-3">
             <NavLink
               className="btn btn-sm flex justify-center items-center gap-1"
-              to="/dashboard/createSession"
+              to="/dashboard/tutor/createSession"
             >
               <FaRegEdit /> Create Session
             </NavLink>
             <NavLink
               className="btn btn-sm flex justify-center items-center gap-1"
-              to="/dashboard/viewAllSession"
+              to="/dashboard/tutor/viewAllSession"
             >
               <FaEye /> View All Session
             </NavLink>
             <NavLink
               className="btn btn-sm flex justify-center items-center gap-1"
-              to="/dashboard/uploadMaterials"
+              to="/dashboard/tutor/uploadMaterials"
             >
               <FaUpload /> Upload Materials
             </NavLink>
             <NavLink
               className="btn btn-sm flex justify-center items-center gap-1"
-              to="/dashboard/viewAllMaterials"
+              to="/dashboard/tutor/viewAllMaterials"
             >
               <FaRegEye /> View All Materials
             </NavLink>
           </section>
         ) : (
-          <section className="flex flex-col">
-            <NavLink to="/dashboard/student">student</NavLink>
-            <NavLink to="/dashboard/student2">student 2</NavLink>
+          <section className="my-5 mx-1 flex flex-col gap-3">
+            <NavLink
+              className="btn btn-sm flex justify-center items-center gap-1"
+              to="/dashboard/student/viewBookedSessions"
+            >
+              <FaBookDead /> Booked Sessions
+            </NavLink>
+            <NavLink
+              className="btn btn-sm flex justify-center items-center gap-1"
+              to="/dashboard/student/createNotes"
+            >
+              <FaSave /> Create Notes
+            </NavLink>
+            <NavLink
+              className="btn btn-sm flex justify-center items-center gap-1"
+              to="/dashboard/student/manageNotes"
+            >
+              <FaBookDead /> Study Materials
+            </NavLink>
+            <NavLink
+              className="btn btn-sm flex justify-center items-center gap-1"
+              to="/dashboard/student/studyMaterials"
+            >
+              <FaRegSave /> Manage Notes
+            </NavLink>
           </section>
         )}
       </div>

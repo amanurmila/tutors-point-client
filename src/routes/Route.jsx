@@ -20,6 +20,12 @@ import PrivateAdmin from "./PrivateAdmin";
 import ViewUserByEmail from "../pages/TutorPage/ViewUserByEmail";
 import SessionDetails from "../pages/Home/SessionDetails";
 import PaymentPage from "../components/Stripe/PaymentPage";
+import PrivetStudent from "./PrivetStudent";
+import ViewBookedSessions from "../pages/StudentPage/ViewBookedSessions";
+import CreateNotes from "../pages/StudentPage/CreateNotes";
+import ManageNotes from "../pages/StudentPage/ManageNotes";
+import StudyMaterials from "../pages/StudentPage/StudyMaterials";
+import RoleBasedRedirect from "../components/RoleBasedRedirect";
 
 const routes = [
   {
@@ -55,9 +61,13 @@ const routes = [
           </PrivateRoute>
         ),
         children: [
-          // Admin routes is here-->
           {
-            path: "allUsers",
+            index: true, // Default route redirects based on role
+            element: <RoleBasedRedirect />,
+          },
+          // Admin routes
+          {
+            path: "admin/allUsers",
             element: (
               <PrivateAdmin>
                 <AllUsers />
@@ -65,7 +75,7 @@ const routes = [
             ),
           },
           {
-            path: "allStudySessions",
+            path: "admin/allStudySessions",
             element: (
               <PrivateAdmin>
                 <AllStudySession />
@@ -73,25 +83,49 @@ const routes = [
             ),
           },
           {
-            path: "allMaterials",
+            path: "admin/allMaterials",
             element: (
               <PrivateAdmin>
                 <AllMaterials />
               </PrivateAdmin>
             ),
           },
-          // Students routes is here-->
+          // Student routes
           {
-            path: "student",
-            element: <Student />,
+            path: "student/viewBookedSessions",
+            element: (
+              <PrivetStudent>
+                <ViewBookedSessions />
+              </PrivetStudent>
+            ),
           },
           {
-            path: "student2",
-            element: <Student2 />,
+            path: "student/createNotes",
+            element: (
+              <PrivetStudent>
+                <CreateNotes />
+              </PrivetStudent>
+            ),
           },
-          // Tutor routes is here-->
           {
-            path: "createSession",
+            path: "student/manageNotes",
+            element: (
+              <PrivetStudent>
+                <ManageNotes />
+              </PrivetStudent>
+            ),
+          },
+          {
+            path: "student/studyMaterials",
+            element: (
+              <PrivetStudent>
+                <StudyMaterials />
+              </PrivetStudent>
+            ),
+          },
+          // Tutor routes
+          {
+            path: "tutor/createSession",
             element: (
               <PrivateTutor>
                 <CreateSession />
@@ -99,7 +133,7 @@ const routes = [
             ),
           },
           {
-            path: "viewAllSession",
+            path: "tutor/viewAllSession",
             element: (
               <PrivateTutor>
                 <ViewAllSession />
@@ -107,7 +141,7 @@ const routes = [
             ),
           },
           {
-            path: "uploadMaterials",
+            path: "tutor/uploadMaterials",
             element: (
               <PrivateTutor>
                 <UploadMaterials />
@@ -115,7 +149,7 @@ const routes = [
             ),
           },
           {
-            path: "viewAllMaterials",
+            path: "tutor/viewAllMaterials",
             element: (
               <PrivateTutor>
                 <ViewUserByEmail />
@@ -135,12 +169,12 @@ const routes = [
     ],
   },
 
-  ////////////
   {
     path: "*",
-    element: <Error></Error>,
+    element: <Error />,
   },
 ];
+
 const router = createBrowserRouter(routes, {
   future: {
     v7_fetcherPersist: true,
