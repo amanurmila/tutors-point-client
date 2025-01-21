@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom"; // Import useNavigate
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import axios from "axios";
 import useAuth from "../../hooks/useAuth";
@@ -7,6 +7,7 @@ import Swal from "sweetalert2";
 
 const PaymentPage = () => {
   const { sessionId } = useParams();
+  const navigate = useNavigate(); // Initialize useNavigate
   const stripe = useStripe();
   const elements = useElements();
   const { user } = useAuth();
@@ -70,6 +71,9 @@ const PaymentPage = () => {
           title: "Payment Successful",
           text: "Session booked successfully!",
         });
+
+        // Navigate to the home page
+        navigate("/");
       }
     } catch (err) {
       setError("An error occurred. Please try again later.");
