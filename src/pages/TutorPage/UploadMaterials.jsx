@@ -23,16 +23,7 @@ const UploadMaterials = () => {
   const handleUploadMaterial = async (e) => {
     e.preventDefault();
 
-    if (!selectedSession) {
-      Swal.fire(
-        "Error",
-        "Please select a session to upload materials.",
-        "error"
-      );
-      return;
-    }
-
-    if (!materialTitle.trim() || !googleDriveLink.trim()) {
+    if (!materialTitle.trim() || !googleDriveLink.trim() || !image) {
       Swal.fire("Error", "Please fill out all fields.", "error");
       return;
     }
@@ -74,10 +65,20 @@ const UploadMaterials = () => {
         setImage(null);
         setGoogleDriveLink("");
         setSelectedSession(null);
+        closeModal(); // Close the modal after successful submission
       }
     } catch (error) {
       Swal.fire("Error", "Failed to upload materials.", "error");
     }
+  };
+
+  const openModal = (session) => {
+    setSelectedSession(session);
+    document.getElementById("uploadModal").showModal();
+  };
+
+  const closeModal = () => {
+    document.getElementById("uploadModal").close();
   };
 
   if (isLoading) {
@@ -96,7 +97,6 @@ const UploadMaterials = () => {
       <div>
         <div className="overflow-x-auto">
           <table className="table">
-            {/* head */}
             <thead>
               <tr>
                 <th>#</th>
@@ -114,7 +114,7 @@ const UploadMaterials = () => {
                   <td>
                     <button
                       className="btn btn-primary text-white"
-                      onClick={() => setSelectedSession(app)}
+                      onClick={() => openModal(app)}
                     >
                       Upload Material
                     </button>
@@ -126,71 +126,84 @@ const UploadMaterials = () => {
         </div>
       </div>
 
-      {/* Material Upload Form */}
-      {selectedSession && (
-        <div className="mt-6">
-          <h3 className="text-xl font-bold mb-4">
-            Upload Material for: {selectedSession.sessionTitle}
-          </h3>
-          <form onSubmit={handleUploadMaterial}>
-            <div className="mb-4">
-              <label className="block font-bold mb-2">Title</label>
-              <input
-                type="text"
-                className="input input-bordered w-full"
-                value={materialTitle}
-                onChange={(e) => setMaterialTitle(e.target.value)}
-                placeholder="Enter material title"
-                required
-              />
+      {/* Modal for Material Upload */}
+      <dialog id="uploadModal" className="modal">
+        <div className="modal-box">
+          {selectedSession && (
+            <div>
+              <h3 className="text-xl font-bold mb-4">
+                Upload Material for: {selectedSession.sessionTitle}
+              </h3>
+              <form onSubmit={handleUploadMaterial}>
+                <div className="mb-4">
+                  <label className="block font-bold mb-2">Title</label>
+                  <input
+                    type="text"
+                    className="input input-bordered w-full"
+                    value={materialTitle}
+                    onChange={(e) => setMaterialTitle(e.target.value)}
+                    placeholder="Enter material title"
+                    required
+                  />
+                </div>
+                <div className="mb-4">
+                  <label className="block font-bold mb-2">Session ID</label>
+                  <input
+                    type="text"
+                    className="input input-bordered w-full"
+                    value={selectedSession._id}
+                    readOnly
+                  />
+                </div>
+                <div className="mb-4">
+                  <label className="block font-bold mb-2">Tutor Email</label>
+                  <input
+                    type="email"
+                    className="input input-bordered w-full"
+                    value={user.email}
+                    readOnly
+                  />
+                </div>
+                <div className="mb-4">
+                  <label className="block font-bold mb-2">Image Upload</label>
+                  <input
+                    type="file"
+                    className="file-input file-input-bordered w-full"
+                    accept="image/*"
+                    onChange={(e) => setImage(e.target.files[0])}
+                    required
+                  />
+                </div>
+                <div className="mb-4">
+                  <label className="block font-bold mb-2">
+                    Google Drive Link
+                  </label>
+                  <input
+                    type="url"
+                    className="input input-bordered w-full"
+                    value={googleDriveLink}
+                    onChange={(e) => setGoogleDriveLink(e.target.value)}
+                    placeholder="Enter Google Drive link"
+                    required
+                  />
+                </div>
+                <div className="flex justify-end">
+                  <button type="submit" className="btn btn-primary">
+                    Submit Material
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-secondary ml-4"
+                    onClick={closeModal}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </form>
             </div>
-            <div className="mb-4">
-              <label className="block font-bold mb-2">Session ID</label>
-              <input
-                type="text"
-                className="input input-bordered w-full"
-                value={selectedSession._id}
-                readOnly
-              />
-            </div>
-            <div className="mb-4">
-              <label className="block font-bold mb-2">Tutor Email</label>
-              <input
-                type="email"
-                className="input input-bordered w-full"
-                value={user.email}
-                readOnly
-              />
-            </div>
-            <div className="mb-4">
-              <label className="block font-bold mb-2">Image Upload</label>
-              <input
-                type="file"
-                className="file-input file-input-bordered w-full"
-                accept="image/*"
-                onChange={(e) => setImage(e.target.files[0])}
-                required
-              />
-            </div>
-            <div className="mb-4">
-              <label className="block font-bold mb-2">Google Drive Link</label>
-              <input
-                type="url"
-                className="input input-bordered w-full"
-                value={googleDriveLink}
-                onChange={(e) => setGoogleDriveLink(e.target.value)}
-                placeholder="Enter Google Drive link"
-                required
-              />
-            </div>
-            <div className="flex justify-end">
-              <button type="submit" className="btn btn-primary">
-                Submit Material
-              </button>
-            </div>
-          </form>
+          )}
         </div>
-      )}
+      </dialog>
     </div>
   );
 };

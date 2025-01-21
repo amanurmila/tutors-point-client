@@ -1,6 +1,7 @@
 import React from "react";
 import useSecureAxios from "../../hooks/useSecureAxios";
 import { useQuery } from "@tanstack/react-query";
+import Swal from "sweetalert2";
 
 const AllMaterials = () => {
   const secureAxios = useSecureAxios();
@@ -12,6 +13,20 @@ const AllMaterials = () => {
       return res.data;
     },
   });
+
+  const handleDelete = async (id) => {
+    const res = await secureAxios.delete(`/material/${id}`);
+    if (res.data.deletedCount > 0) {
+      refetch();
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: `Material is deleted successfully!`,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
+  };
 
   console.log(materials);
 
