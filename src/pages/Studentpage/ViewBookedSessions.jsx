@@ -1,6 +1,22 @@
 import React from "react";
+import useAuth from "../../hooks/useAuth";
+import { useQuery } from "@tanstack/react-query";
+import useSecureAxios from "../../hooks/useSecureAxios";
 
 const ViewBookedSessions = () => {
+  const { user } = useAuth();
+  const secureAxios = useSecureAxios();
+
+  const { data: booked = [], refetch } = useQuery({
+    queryKey: ["booked", user.email],
+    queryFn: async () => {
+      const res = await secureAxios.get(`/booked-sessions/${user.email}`);
+      return res.data;
+    },
+  });
+
+  console.log(booked);
+
   return (
     <div>
       <div className="text-center">

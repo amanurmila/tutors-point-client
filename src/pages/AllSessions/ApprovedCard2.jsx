@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const approvedCard = ({ session }) => {
+const ApprovedCard2 = ({ session }) => {
   // Determine if registration is ongoing
   const isOngoing = new Date(session.registrationEndDate) >= new Date();
 
@@ -18,7 +18,7 @@ const approvedCard = ({ session }) => {
           >
             {isOngoing ? "Ongoing" : "Closed"}
           </button>
-          <Link to={`/session/${session._id}`}>
+          <Link to={`/approvedSessions/${session._id}`}>
             <button className="btn btn-primary btn-sm capitalize">
               Read More
             </button>
@@ -29,4 +29,4 @@ const approvedCard = ({ session }) => {
   );
 };
 
-export default approvedCard;
+export default ApprovedCard2;

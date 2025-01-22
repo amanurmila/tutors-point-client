@@ -2,6 +2,7 @@ import React from "react";
 import useSecureAxios from "../../hooks/useSecureAxios";
 import { useQuery } from "@tanstack/react-query";
 import ApprovedCard from "./ApprovedCard";
+import { Link } from "react-router-dom";
 
 const ApprovedSession = () => {
   const secureAxios = useSecureAxios();
@@ -27,6 +28,9 @@ const ApprovedSession = () => {
         {sessions.map((session, idx) => (
           <ApprovedCard session={session} key={session._id} />
         ))}
+      </div>
+      <div className="text-center">
+        <Link to="/all-approved-sessions" className="btn btn-success">View All Approved Sessions</Link>
       </div>
     </div>
   );

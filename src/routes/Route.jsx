@@ -26,6 +26,7 @@ import CreateNotes from "../pages/StudentPage/CreateNotes";
 import ManageNotes from "../pages/StudentPage/ManageNotes";
 import StudyMaterials from "../pages/StudentPage/StudyMaterials";
 import RoleBasedRedirect from "../components/RoleBasedRedirect";
+import AllApprovedSessions from "../pages/AllSessions/AllApprovedSessions";
 
 const routes = [
   {
@@ -38,6 +39,22 @@ const routes = [
       },
       {
         path: "/session/:id",
+        element: (
+          <PrivateRoute>
+            <SessionDetails />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/approvedSessions",
+        element: (
+          <PrivateRoute>
+            <AllApprovedSessions />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/approvedSessions/:id",
         element: (
           <PrivateRoute>
             <SessionDetails />
