@@ -30,7 +30,7 @@ const ApprovedSession = () => {
         ))}
       </div>
       <div className="text-center">
-        <Link to="/all-approved-sessions" className="btn btn-success">View All Approved Sessions</Link>
+        <Link to="/approvedSessions" className="btn btn-success">View All Approved Sessions</Link>
       </div>
     </div>
   );

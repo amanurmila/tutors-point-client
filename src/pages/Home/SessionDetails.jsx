@@ -4,6 +4,8 @@ import useSecureAxios from "../../hooks/useSecureAxios";
 import { useQuery } from "@tanstack/react-query";
 import useAuth from "../../hooks/useAuth";
 import { FaStar } from "react-icons/fa";
+import Swal from "sweetalert2";
+import axios from "axios";
 
 const SessionDetails = () => {
   const { id } = useParams();
@@ -21,8 +23,10 @@ const SessionDetails = () => {
   });
 
   const {
+    _id,
     sessionTitle,
     tutorName,
+    tutorEmail,
     sessionDescription,
     registrationStartDate,
     registrationEndDate,
@@ -32,6 +36,8 @@ const SessionDetails = () => {
     registrationFee,
     reviews = [],
   } = session;
+
+  console.log(tutorEmail)
 
   const isRegistrationClosed = new Date(registrationEndDate) < new Date();
 
@@ -52,17 +58,40 @@ const SessionDetails = () => {
     setLoading(true);
 
     try {
+      // Convert registrationFee to a number
+      const fee = Number(registrationFee);
+
       const response = await secureAxios.post("/book-session", {
         sessionId: id,
         studentEmail: user?.email,
-        registrationFee,
+        registrationFee: fee,
       });
 
       const { clientSecret, message } = response.data;
 
-      if (registrationFee === 0) {
-        // Free session booked
-        alert(message || "Session booked successfully!");
+      if (fee === 0) {
+        const bookingData = {
+          sessionId: _id,
+          studentEmail: user.email,
+          tutorEmail,
+          registrationFee: registrationFee,
+          status: "Booked",
+          bookedAt: new Date(),
+        };
+
+        const res = await axios.post(
+          "http://localhost:5000/book-session",
+          bookingData
+        );
+        // Free session booked, show SweetAlert
+        if (res.data.insertedId) {
+          Swal.fire({
+            title: "Success!",
+            text: message || "Session booked successfully!",
+            icon: "success",
+            confirmButtonText: "OK",
+          });
+        }
       } else {
         // Paid session: Redirect to payment page
         navigate(`/payment/${id}`, { state: { clientSecret, session } });
