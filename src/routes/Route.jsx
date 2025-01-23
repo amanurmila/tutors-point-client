@@ -27,6 +27,7 @@ import ManageNotes from "../pages/StudentPage/ManageNotes";
 import StudyMaterials from "../pages/StudentPage/StudyMaterials";
 import RoleBasedRedirect from "../components/RoleBasedRedirect";
 import AllApprovedSessions from "../pages/AllSessions/AllApprovedSessions";
+import SessionDetailsPage from "../pages/StudentPage/SessionDetailsPage";
 
 const routes = [
   {
@@ -139,6 +140,10 @@ const routes = [
                 <StudyMaterials />
               </PrivetStudent>
             ),
+          },
+          {
+            path: "sessionDetailsPage/:id",
+            element: <SessionDetailsPage />,
           },
           // Tutor routes
           {

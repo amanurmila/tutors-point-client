@@ -2,6 +2,7 @@ import React from "react";
 import useAuth from "../../hooks/useAuth";
 import { useQuery } from "@tanstack/react-query";
 import useSecureAxios from "../../hooks/useSecureAxios";
+import { Link } from "react-router-dom";
 
 const ViewBookedSessions = () => {
   const { user } = useAuth();
@@ -15,8 +16,6 @@ const ViewBookedSessions = () => {
     },
   });
 
-  console.log(booked);
-
   return (
     <div>
       <div className="text-center">
@@ -25,7 +24,40 @@ const ViewBookedSessions = () => {
         </h2>
         <p>Only you can view your booked sessions</p>
       </div>
-      <div></div>
+      <div>
+        <div className="overflow-x-auto">
+          <table className="table">
+            {/* head */}
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Session Id</th>
+                <th>Tutor Email</th>
+                <th>Fees Paid</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {booked.map((item, idx) => (
+                <tr key={item._id}>
+                  <th>1</th>
+                  <td>{item.sessionId}</td>
+                  <td>{item.tutorEmail}</td>
+                  <td>{item.registrationFee}</td>
+                  <td>
+                    <Link
+                      to={`/dashboard/sessionDetailsPage/${item.sessionId}`}
+                      className="btn btn-success btn-sm"
+                    >
+                      View Details
+                    </Link>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   );
 };
