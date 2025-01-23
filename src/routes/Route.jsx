@@ -28,6 +28,7 @@ import StudyMaterials from "../pages/StudentPage/StudyMaterials";
 import RoleBasedRedirect from "../components/RoleBasedRedirect";
 import AllApprovedSessions from "../pages/AllSessions/AllApprovedSessions";
 import SessionDetailsPage from "../pages/StudentPage/SessionDetailsPage";
+import StudentMaterials from "../pages/StudentPage/StudentMaterials";
 
 const routes = [
   {
@@ -144,6 +145,14 @@ const routes = [
           {
             path: "sessionDetailsPage/:id",
             element: <SessionDetailsPage />,
+          },
+          {
+            path: "viewMaterialsPage/:id",
+            element: (
+              <PrivetStudent>
+                <StudentMaterials />
+              </PrivetStudent>
+            ),
           },
           // Tutor routes
           {

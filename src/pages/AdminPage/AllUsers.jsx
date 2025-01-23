@@ -4,9 +4,12 @@ import useSecureAxios from "../../hooks/useSecureAxios";
 import Swal from "sweetalert2";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
+import ReactPaginate from "react-paginate";
 
 const AllUsers = () => {
   const [search, setSearch] = useState(""); // Search input state
+  const [currentPage, setCurrentPage] = useState(0); // Current page for pagination
+  const itemsPerPage = 10; // Number of items per page
   const secureAxios = useSecureAxios();
   const axiosPublic = useAxiosPublic();
 
@@ -17,6 +20,16 @@ const AllUsers = () => {
       return res.data;
     },
   });
+
+  // Pagination calculations
+  const pageCount = Math.ceil(users.length / itemsPerPage);
+  const startIndex = currentPage * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentItems = users.slice(startIndex, endIndex);
+
+  const handlePageChange = ({ selected }) => {
+    setCurrentPage(selected);
+  };
 
   const handleMakeAdmin = async (item) => {
     try {
@@ -42,6 +55,7 @@ const AllUsers = () => {
 
   const handleSearch = () => {
     refetch(); // Trigger a refetch with the updated search query
+    setCurrentPage(0); // Reset to the first page after search
   };
 
   return (
@@ -81,9 +95,9 @@ const AllUsers = () => {
             </thead>
             {/* Table Body */}
             <tbody>
-              {users.map((item, idx) => (
+              {currentItems.map((item, idx) => (
                 <tr key={item._id}>
-                  <th>{idx + 1}</th>
+                  <th>{startIndex + idx + 1}</th>
                   <td>{item.name}</td>
                   <td>{item.email}</td>
                   <td>{item.role}</td>
@@ -104,6 +118,31 @@ const AllUsers = () => {
             </tbody>
           </table>
         </div>
+
+        {/* Page Information */}
+        {users.length > 0 && (
+          <div className="text-center my-3">
+            Page {currentPage + 1} of {pageCount}
+          </div>
+        )}
+
+        {/* Pagination */}
+        {pageCount > 1 && (
+          <div className="flex justify-center my-5">
+            <ReactPaginate
+              previousLabel={"← Previous"}
+              nextLabel={"Next →"}
+              pageCount={pageCount}
+              onPageChange={handlePageChange}
+              containerClassName={"pagination flex gap-2"}
+              pageClassName={"btn btn-outline"}
+              previousClassName={"btn btn-outline"}
+              nextClassName={"btn btn-outline"}
+              activeClassName={"btn btn-primary text-white font-bold"}
+              disabledLinkClassName={"btn-disabled"}
+            />
+          </div>
+        )}
       </div>
     </div>
   );

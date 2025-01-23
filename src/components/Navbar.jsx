@@ -1,12 +1,14 @@
 import React, { useContext, useState, useEffect, useRef } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import { AuthContext } from "../providers/AuthProvider";
 import { toast } from "react-toastify";
 
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
   const [isModalOpen, setIsModalOpen] = useState(false); // State to manage modal visibility
+  const [isMenuOpen, setIsMenuOpen] = useState(false); // State to manage dropdown menu visibility
   const modalRef = useRef(null); // Reference to the modal container
+  const location = useLocation(); // Get the current route location
 
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
@@ -47,6 +49,11 @@ const Navbar = () => {
     </>
   );
 
+  // Close the menu when the route changes
+  useEffect(() => {
+    setIsMenuOpen(false); // Close the menu when the route changes
+  }, [location]);
+
   return (
     <div className="bg-slate-300">
       <div className="navbar w-11/12 mx-auto">
@@ -65,8 +72,14 @@ const Navbar = () => {
               Tutors Point
             </Link>
           </div>
+
+          {/* Hamburger menu button */}
           <div className="dropdown lg:hidden">
-            <button tabIndex={0} className="btn btn-ghost">
+            <button
+              tabIndex={0}
+              className="btn btn-ghost"
+              onClick={() => setIsMenuOpen((prev) => !prev)} // Toggle the menu
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-5 w-5"
@@ -82,16 +95,18 @@ const Navbar = () => {
                 />
               </svg>
             </button>
-            <ul
-              tabIndex={0}
-              className="menu menu-sm dropdown-content bg-base-100 rounded-box mt-3 w-52 p-2 shadow"
-            >
-              {list}
-            </ul>
+            {isMenuOpen && ( // Conditionally render the dropdown menu
+              <ul
+                tabIndex={0}
+                className="menu menu-sm dropdown-content bg-base-100 rounded-box mt-3 w-52 p-2 shadow"
+              >
+                {list}
+              </ul>
+            )}
           </div>
         </div>
 
-        {/* Navbar center */}
+        {/* Navbar center (for larger screens) */}
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">{list}</ul>
         </div>
