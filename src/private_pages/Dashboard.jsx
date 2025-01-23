@@ -96,13 +96,14 @@ const Dashboard = () => {
               className="btn btn-sm flex justify-center items-center gap-1"
               to="/dashboard/student/manageNotes"
             >
-              <FaBookDead /> Study Materials
+              <FaBookDead />
+              Manage Notes
             </NavLink>
             <NavLink
               className="btn btn-sm flex justify-center items-center gap-1"
               to="/dashboard/student/studyMaterials"
             >
-              <FaRegSave /> Manage Notes
+              <FaRegSave /> Study Materials
             </NavLink>
           </section>
         )}
