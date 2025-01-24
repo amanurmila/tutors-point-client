@@ -63,7 +63,7 @@ const UpdateModal = ({ material, onClose, refetch }) => {
     try {
       // Send update request to backend
       const response = await fetch(
-        `http://localhost:5000/materials/${material._id}`,
+        `https://tutors-point-server.vercel.app/materials/${material._id}`,
         {
           method: "PATCH",
           headers: {

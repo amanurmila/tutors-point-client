@@ -80,7 +80,7 @@ const SessionDetails = () => {
         };
 
         const res = await axios.post(
-          "http://localhost:5000/book-session",
+          "https://tutors-point-server.vercel.app/book-session",
           bookingData
         );
         // Free session booked, show SweetAlert

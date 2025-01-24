@@ -27,7 +27,7 @@ const ReviewSection = ({ sessionId }) => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/reviews",
+        "https://tutors-point-server.vercel.app/reviews",
         newReview
       ); // Adjust URL based on your backend
       setReviewText("");

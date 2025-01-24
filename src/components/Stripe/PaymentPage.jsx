@@ -33,7 +33,7 @@ const PaymentPage = () => {
       // Fetch client secret and session details
       const {
         data: { clientSecret, sessionDetails },
-      } = await axios.post("http://localhost:5000/get-session-details", {
+      } = await axios.post("https://tutors-point-server.vercel.app/get-session-details", {
         sessionId,
       });
 
@@ -64,7 +64,7 @@ const PaymentPage = () => {
           bookedAt: new Date(),
         };
 
-        await axios.post("http://localhost:5000/book-session", bookingData);
+        await axios.post("https://tutors-point-server.vercel.app/book-session", bookingData);
 
         Swal.fire({
           icon: "success",

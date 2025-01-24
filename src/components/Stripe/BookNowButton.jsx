@@ -10,7 +10,7 @@ const BookNowButton = ({ sessionId, registrationFee }) => {
       // Free booking
       try {
         const response = await axios.post(
-          "http://localhost:5000/book-session",
+          "https://tutors-point-server.vercel.app/book-session",
           {
             sessionId,
             studentEmail: "loggedInUser@example.com", // Replace with actual logged-in user's email

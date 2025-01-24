@@ -76,7 +76,7 @@ const Register = () => {
 
   // Save user to the database (shared function for both cases)
   const saveUserToDatabase = (userData) => {
-    fetch("http://localhost:5000/users", {
+    fetch("https://tutors-point-server.vercel.app/users", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(userData),
